@@ -1,6 +1,9 @@
 # eclectic-helpers
 Various helpers I dont want to duplicate
 
+# install
+    composer require quazardous/eclectic-helpers
+
 # doc
 See code. You may like the RowsMapper in src/Transform.
 
