@@ -1,0 +1,30 @@
+{
+	"name" : "quazardous/eclectic-helpers",
+	"keywords" : [
+        "helper"
+    ],
+	"type" : "library",
+	"description" : "Various helpers I dont want to duplicate",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Quazardous",
+			"email" : "berliozdavid@gmail.com",
+			"role" : "Developer"
+		}
+	],
+   "autoload" : {
+        "psr-4" : {
+            "Quazardous\\Eclectic\\" : "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "suggest": {
+        "doctrine/common": "Inflector, SmartObjectMapper",
+        "doctrine/dbal": "SQL",
+        "symfony/property-access": "SmartObjectMapper"
+    }
+}
