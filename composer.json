@@ -25,6 +25,7 @@
     "suggest": {
         "doctrine/common": "Inflector, SmartObjectMapper",
         "doctrine/dbal": "SQL",
+        "doctrine/form": "ComplexType",
         "symfony/property-access": "SmartObjectMapper"
     }
 }
