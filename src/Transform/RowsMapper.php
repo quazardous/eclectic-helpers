@@ -30,7 +30,7 @@ use Quazardous\Eclectic\Transform\RowMapperInterface;
  *  {% endfor %}
  *  
  */
-class RowsMapper implements \Iterator, \ArrayAccess, RowMapperInterface
+class RowsMapper implements \Iterator, \ArrayAccess, \Countable, RowMapperInterface
 {
     protected $rowClass = 'Quazardous\Eclectic\Transform\SmartObjectMapper';
     protected $rows;
@@ -126,5 +126,9 @@ class RowsMapper implements \Iterator, \ArrayAccess, RowMapperInterface
     
     public function offsetUnset ($offset) {
         throw new \LogicException("Not allowed");
+    }
+    
+    public function count() {
+        return count($this->rows);
     }
 }
