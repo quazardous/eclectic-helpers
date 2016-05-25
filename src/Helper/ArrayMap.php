@@ -34,4 +34,51 @@ class ArrayMap
         }
         throw new \InvalidArgumentException("unknown map type");
     }
+    
+    /**
+     * Deep set a value in an associative array.
+     * @param array $array
+     * @param string|array $path
+     * @param scalar $value
+     * @param string $delim
+     */
+    public static function deepSet(array &$array, $path, $value, $delim = '/')
+    {
+        if (!is_array($path)) {
+            $path = explode($delim, $path);
+        }
+    
+        $last_key = array_pop($path);
+    
+        $base = &$array;
+        foreach ($path as $key) {
+            if (!array_key_exists($key, $base)) {
+                $base[$key] = [];
+            }
+            $base = &$base[$key];
+        }
+        $base[$last_key] = $value;
+    }
+    
+    /**
+     * Deep get a value in an associative array.
+     * @param array $array
+     * @param string|array $path
+     * @param string $delim
+     * @return NULL|scalar
+     */
+    public static function deepGet(array $array, $path, $delim = '/')
+    {
+        if (!is_array($path)) {
+            $path = explode($delim, $path);
+        }
+        $base = &$array;
+        foreach ($path as $key) {
+            if (!array_key_exists($key, $base)) {
+                return null;
+            }
+            $base = &$base[$key];
+        }
+        return $base;
+    }
 }
