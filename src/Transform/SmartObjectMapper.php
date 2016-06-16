@@ -25,37 +25,37 @@ use Doctrine\Common\Util\Inflector;
 class SmartObjectMapper implements MappedRowInterface, RowMapperInterface
 {
 
-    protected $data;
-    protected $map;
-    protected $options;
-    protected $cache;
+    protected $_data;
+    protected $_map;
+    protected $_options;
+    protected $_cache;
 
     public function __construct($data, array $map = [], array $options = [])
     {
-        $this->data = $data;
-        $this->map = $map;
-        $this->options = $options;
+        $this->_data = $data;
+        $this->_map = $map;
+        $this->_options = $options;
         
-        $this->options += [
+        $this->_options += [
             'use_cache' => true,
         ];
-        $this->cache = [];
+        $this->_cache = [];
     }
     
     public function getData()
     {
-        return $this->data;
+        return $this->_data;
     }
     
     public function getRawValue($field)
     {
-        if (is_array($this->data)) {
-            if (array_key_exists($field, $this->data)) {
-                return $this->data[$field];
+        if (is_array($this->_data)) {
+            if (array_key_exists($field, $this->_data)) {
+                return $this->_data[$field];
             }
-        } elseif (is_object($this->data)) {
-            if ($this->getAccessor()->isReadable($this->data, $field)) {
-                return $this->getAccessor()->getValue($this->data, $field);
+        } elseif (is_object($this->_data)) {
+            if ($this->getAccessor()->isReadable($this->_data, $field)) {
+                return $this->getAccessor()->getValue($this->_data, $field);
             }
         }
         return null;
@@ -63,12 +63,12 @@ class SmartObjectMapper implements MappedRowInterface, RowMapperInterface
     
     public function getValue($field)
     {
-        if ($this->options['use_cache'] && array_key_exists($field, $this->cache)) {
-            return $this->cache[$field];
+        if ($this->_options['use_cache'] && array_key_exists($field, $this->_cache)) {
+            return $this->_cache[$field];
         }
         $value = $this->getRawValue($field);
-        if (array_key_exists($field, $this->map)) {
-            foreach ($this->map[$field] as $map) {
+        if (array_key_exists($field, $this->_map)) {
+            foreach ($this->_map[$field] as $map) {
                 if (is_callable($map)) {
                     $value = $map($this, $field, $value);
                 } else {
@@ -76,21 +76,21 @@ class SmartObjectMapper implements MappedRowInterface, RowMapperInterface
                 }
             }
         }
-        if ($this->options['use_cache']) {
-            $this->cache[$field] = $value;
+        if ($this->_options['use_cache']) {
+            $this->_cache[$field] = $value;
         }
         return $value;
     }
     
     protected function valueExists($field)
     {
-        if (array_key_exists($field, $this->map)) {
+        if (array_key_exists($field, $this->_map)) {
             return true;
         }
-        if (is_array($this->data)) {
-            return array_key_exists($field, $this->data);
-        } elseif (is_object($this->data)) {
-            return $this->getAccessor()->isReadable($this->data, $field);
+        if (is_array($this->_data)) {
+            return array_key_exists($field, $this->_data);
+        } elseif (is_object($this->_data)) {
+            return $this->getAccessor()->isReadable($this->_data, $field);
         }
         return false;
     }
@@ -143,15 +143,15 @@ class SmartObjectMapper implements MappedRowInterface, RowMapperInterface
     
     public function __call($name, array $arguments)
     {
-        return call_user_func_array([$this->data, $name], $arguments);
+        return call_user_func_array([$this->_data, $name], $arguments);
     }
     
     public function addField($name, $value = null)
     {
-        if (empty($this->map[$name])) {
-            $this->map[$name] = [];
+        if (empty($this->_map[$name])) {
+            $this->_map[$name] = [];
         }
-        $this->map[$name][] = $value;
+        $this->_map[$name][] = $value;
     }
     
     public function addFields(array $names, $value = null)
@@ -170,6 +170,6 @@ class SmartObjectMapper implements MappedRowInterface, RowMapperInterface
     
     public function resetField($name)
     {
-        unset($this->map[$name]);
+        unset($this->_map[$name]);
     }
 }
