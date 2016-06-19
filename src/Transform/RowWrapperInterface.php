@@ -2,11 +2,11 @@
 namespace Quazardous\Eclectic\Transform;
 
 /**
- * Interface for rows mapper.
- * A row mapper can add/map (pseudo) fields to the rows.
+ * Interface for rows wrapper.
+ * A row wrapper can add/map (pseudo) fields to the rows.
  *
  */
-interface RowMapperInterface
+interface RowWrapperInterface
 {
     /**
      * Add/map a field to the row.
@@ -17,7 +17,7 @@ interface RowMapperInterface
      *     - field: the field name
      *     - value: the current value if set
      * 
-     * Mappers should be able to stack multiple callbacks.
+     * Wrappers should be able to stack multiple callbacks.
      */
     public function addField($name, $value = null);
     

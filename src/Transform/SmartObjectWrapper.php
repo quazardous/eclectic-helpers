@@ -1,16 +1,16 @@
 <?php
 namespace Quazardous\Eclectic\Transform;
 
-use Quazardous\Eclectic\Transform\MappedRowInterface;
-use Quazardous\Eclectic\Transform\RowMapperInterface;
+use Quazardous\Eclectic\Transform\WrappedRowInterface;
+use Quazardous\Eclectic\Transform\RowWrapperInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Doctrine\Common\Util\Inflector;
 
 /**
- * A single row mapper.
+ * A single row wrapper.
  * 
- * Can be used directly to map single row/data with pseudo fields.
- * @see RowsMapper
+ * Can be used directly to wrap single row/data with pseudo fields.
+ * @see RowsWrapper
  * 
  * A field callbacks stack will be triggered only once then the final value will be cached.
  * 
@@ -22,7 +22,7 @@ use Doctrine\Common\Util\Inflector;
  *  - fooBar
  *  - foo_bar
  */
-class SmartObjectMapper implements MappedRowInterface, RowMapperInterface
+class SmartObjectWrapper implements WrappedRowInterface, RowWrapperInterface
 {
 
     protected $data;

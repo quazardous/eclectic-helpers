@@ -2,17 +2,17 @@
 namespace Quazardous\Eclectic\Transform;
 
 /**
- * Interface for a mapped row.
+ * Interface for a wrapped row.
  *
  */
-interface MappedRowInterface
+interface WrappedRowInterface
 {
     /**
-     * A multipe rows mapper needs to create new rows.
+     * A multipe rows wrapper needs to create new rows.
      * @param mixed $data row data or object
      * @param array $map the fields map
      * @param array $options
-     * @see RowsMapper
+     * @see RowsWrapper
      */
     public function __construct($data, array $map = [], array $options = []);
 }

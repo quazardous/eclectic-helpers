@@ -1,19 +1,19 @@
 <?php
 namespace Quazardous\Eclectic\Transform;
 
-use Quazardous\Eclectic\Transform\MappedRowInterface;
-use Quazardous\Eclectic\Transform\RowMapperInterface;
+use Quazardous\Eclectic\Transform\WrappedRowInterface;
+use Quazardous\Eclectic\Transform\RowWrapperInterface;
 
 /**
- * An "array of rows" mapper.
+ * An "array of rows" wrapper.
  * 
  * The goal is to put value transformation/presentation stuff "outside" of the controller logic.
  * 
  *  So the steps in a controller are:
  *  // retrieve an array of rows:
  *  $rows = $app['service']->getRows();
- *  // put the rows in a mapper
- *  $rows = new \Quazardous\Eclectic\Transform\RowsMapper($rows);
+ *  // put the rows in a wrapper
+ *  $rows = new \Quazardous\Eclectic\Transform\RowsWrapper($rows);
  *  // add some fancy fields with presentation stuff
  *  $rows->addField('foo', function ($data, $field, $value) use ($app) {
  *      // presentation stuff
@@ -22,17 +22,17 @@ use Quazardous\Eclectic\Transform\RowMapperInterface;
  *  // twig render
  *  ...
  *  
- *  @see SmartObjectMapper
- *  The SmartObjectMapper will allow you to access the field in the Twig template.
+ *  @see SmartObjectWrapper
+ *  The SmartObjectWrapper will allow you to access the field in the Twig template.
  *  
  *  {% for row in rows %}
  *  {{ row.foo }}
  *  {% endfor %}
  *  
  */
-class RowsMapper implements \Iterator, \ArrayAccess, \Countable, RowMapperInterface
+class RowsWrapper implements \Iterator, \ArrayAccess, \Countable, RowWrapperInterface
 {
-    protected $rowClass = 'Quazardous\Eclectic\Transform\SmartObjectMapper';
+    protected $rowClass = 'Quazardous\Eclectic\Transform\SmartObjectWrapper';
     protected $rows;
     protected $transformedRows;
     protected $fieldsMap = [];
@@ -83,8 +83,8 @@ class RowsMapper implements \Iterator, \ArrayAccess, \Countable, RowMapperInterf
         if (!array_key_exists($index, $this->transformedRows)) {
             $c = $this->rowClass;
             $row = new $c($this->rows[$index], $this->fieldsMap, $this->options);
-            if (!($row instanceof MappedRowInterface)) {
-                throw new \LogicException("$c should implement MappedRowInterface");
+            if (!($row instanceof WrappedRowInterface)) {
+                throw new \LogicException("$c should implement WrappedRowInterface");
             }
             $this->transformedRows[$index] = $row;
         }

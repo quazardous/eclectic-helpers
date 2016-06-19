@@ -6,7 +6,7 @@ Various helpers I dont want to duplicate
 
 # doc
 See code. You may like:
-- RowsMapper in src/Transform: add dynamic fields to row or array of rows. Use it form Twig preparation stuff.
+- RowsWrapper in src/Transform: add dynamic fields to row or array of rows. Use it for Twig data preparation stuff.
 - ComplexType in src/Form: structured form type without form class.
 - ZOutStream in src/Helper: on-the-fly zlib compression to web output (for downloads).
 
