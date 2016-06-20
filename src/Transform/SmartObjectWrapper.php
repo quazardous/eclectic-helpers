@@ -42,31 +42,31 @@ class SmartObjectWrapper implements WrappedRowInterface, RowWrapperInterface
         $this->_cache = [];
     }
     
-    public function getData()
+    public function _getData()
     {
         return $this->_data;
     }
     
-    public function getRawValue($field)
+    public function _getRawValue($field)
     {
         if (is_array($this->_data)) {
             if (array_key_exists($field, $this->_data)) {
                 return $this->_data[$field];
             }
         } elseif (is_object($this->_data)) {
-            if ($this->getAccessor()->isReadable($this->_data, $field)) {
-                return $this->getAccessor()->getValue($this->_data, $field);
+            if ($this->_getAccessor()->isReadable($this->_data, $field)) {
+                return $this->_getAccessor()->getValue($this->_data, $field);
             }
         }
         return null;
     }
     
-    public function getValue($field)
+    public function _getValue($field)
     {
         if ($this->_options['use_cache'] && array_key_exists($field, $this->_cache)) {
             return $this->_cache[$field];
         }
-        $value = $this->getRawValue($field);
+        $value = $this->_getRawValue($field);
         if (array_key_exists($field, $this->_map)) {
             foreach ($this->_map[$field] as $map) {
                 if (is_callable($map)) {
@@ -82,7 +82,7 @@ class SmartObjectWrapper implements WrappedRowInterface, RowWrapperInterface
         return $value;
     }
     
-    protected function valueExists($field)
+    protected function _valueExists($field)
     {
         if (array_key_exists($field, $this->_map)) {
             return true;
@@ -90,55 +90,55 @@ class SmartObjectWrapper implements WrappedRowInterface, RowWrapperInterface
         if (is_array($this->_data)) {
             return array_key_exists($field, $this->_data);
         } elseif (is_object($this->_data)) {
-            return $this->getAccessor()->isReadable($this->_data, $field);
+            return $this->_getAccessor()->isReadable($this->_data, $field);
         }
         return false;
     }
     
     public function __get($field)
     {
-        if ($this->valueExists($field)) {
-            return $this->getValue($field);
+        if ($this->_valueExists($field)) {
+            return $this->_getValue($field);
         }
         $_field = Inflector::tableize($field);
-        if ($_field != $field && $this->valueExists($_field)) {
-            return $this->getValue($_field);
+        if ($_field != $field && $this->_valueExists($_field)) {
+            return $this->_getValue($_field);
         }
         $_field = Inflector::camelize($field);
-        if ($_field != $field && $this->valueExists($_field)) {
-            return $this->getValue($_field);
+        if ($_field != $field && $this->_valueExists($_field)) {
+            return $this->_getValue($_field);
         }
         return null;
     }
     
     public function __isset($field)
     {
-        if ($this->valueExists($field)) {
+        if ($this->_valueExists($field)) {
             return true;
         }
         $_field = Inflector::tableize($field);
-        if ($_field != $field && $this->valueExists($_field)) {
+        if ($_field != $field && $this->_valueExists($_field)) {
             return true;
         }
         $_field = Inflector::camelize($field);
-        if ($_field != $field && $this->valueExists($_field)) {
+        if ($_field != $field && $this->_valueExists($_field)) {
             return true;
         }
         return false;
     }
 
-    protected $accessor;
+    protected $_accessor;
     
     /**
      * @return \Symfony\Component\PropertyAccessor\PropertyAccessorInterface
      */
-    protected function getAccessor()
+    protected function _getAccessor()
     {
-        if (empty($this->accessor)) {
+        if (empty($this->_accessor)) {
             $builder = PropertyAccess::createPropertyAccessorBuilder();
-            $this->accessor = $builder->getPropertyAccessor();
+            $this->_accessor = $builder->getPropertyAccessor();
         }
-        return $this->accessor;
+        return $this->_accessor;
     }
     
     public function __call($name, array $arguments)

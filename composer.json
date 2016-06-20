@@ -27,5 +27,10 @@
         "doctrine/dbal": "SQL",
         "doctrine/form": "ComplexType",
         "symfony/property-access": "SmartObjectMapper"
+    },
+    "require-dev": {
+        "doctrine/common" : "^2.0",
+        "symfony/property-access": "^3.0",
+        "doctrine/dbal" : "^2.5"
     }
 }
