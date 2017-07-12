@@ -44,7 +44,6 @@ class SQL
                 $i = 1;
                 $where = [];
                 foreach ($criteria[$key] as $op => $value) {
-                    echo "op=$op\n";
                     if (is_int($op) && in_array(strtoupper($value), ['AND', 'OR'])) {
                         $where[] = strtoupper($value);
                     } elseif (in_array(strtoupper($op), ['LIKE', '<', '>', '<>', '<=', '>=', '=', 'IN', 'NOT IN'])) {
