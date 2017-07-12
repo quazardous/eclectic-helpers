@@ -24,8 +24,11 @@ class SQL
         if (!array_key_exists($key, $criteria)) {
             return false;
         }
-        // handle IS NULL
+        // handle IS (NOT) NULL
         if (is_null($criteria[$key])) {
+            if (in_array($operator, ['<>', 'NOT IN'])) {
+                return "$field IS NOT NULL";
+            }
             return "$field IS NULL";
         }
         // handle complex conditions
@@ -41,6 +44,7 @@ class SQL
                 $i = 1;
                 $where = [];
                 foreach ($criteria[$key] as $op => $value) {
+                    echo "op=$op\n";
                     if (is_int($op) && in_array(strtoupper($value), ['AND', 'OR'])) {
                         $where[] = strtoupper($value);
                     } elseif (in_array(strtoupper($op), ['LIKE', '<', '>', '<>', '<=', '>=', '=', 'IN', 'NOT IN'])) {
