@@ -97,6 +97,27 @@ class Time
     }
     
     /**
+     * Ensure the date can be a correct \DateTime or null.
+     * @param \DateTime|string $date
+     * @param string $format
+     * @throws \InvalidArgumentException
+     * @return \DateTime
+     */
+    public static function ensureDateTimeOrNull($date, $format = "Y-m-d H:i:s")
+    {
+        if (empty($date)) {
+            return null;
+        }
+        if (is_string($date)) {
+            $date = \DateTime::createFromFormat($format, $date);
+        }
+        if ($date instanceof \DateTime) {
+            return $date;
+        }
+        throw new \InvalidArgumentException('Incorrect date');
+    }
+    
+    /**
      * Ensure the date can be a correct date string.
      * @param \DateTime|string $date
      * @param string $format
@@ -106,6 +127,26 @@ class Time
     {
         if (empty($date)) {
             new \InvalidArgumentException('Incorrect date');
+        }
+        if (is_string($date)) {
+            $date = \DateTime::createFromFormat($format, $date);
+        }
+        if ($date instanceof \DateTime) {
+            return $date->format($format);
+        }
+        throw new \InvalidArgumentException('Incorrect date');
+    }
+    
+    /**
+     * Ensure the date can be a correct date string or null.
+     * @param \DateTime|string $date
+     * @param string $format
+     * @throws \InvalidArgumentException
+     */
+    public static function ensureStringOrNull($date, $format = "Y-m-d H:i:s")
+    {
+        if (empty($date)) {
+            return null;
         }
         if (is_string($date)) {
             $date = \DateTime::createFromFormat($format, $date);
