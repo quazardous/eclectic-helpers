@@ -146,6 +146,11 @@ class SmartObjectWrapper implements WrappedRowInterface, RowWrapperInterface
         return call_user_func_array([$this->_data, $name], $arguments);
     }
     
+    public function __invoke()
+    {
+        return $this->_data;
+    }
+    
     public function addField($name, $value = null)
     {
         if (empty($this->_map[$name])) {
