@@ -32,5 +32,8 @@
         "doctrine/common" : "^2.0",
         "symfony/property-access": "^3.0",
         "doctrine/dbal" : "^2.5"
-    }
+    },
+	"require": {
+		"phpunit/phpunit": "^6.2"
+	}
 }

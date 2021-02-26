@@ -14,9 +14,10 @@ class SQL
      * @param string $key the field basename in the criteria
      * @param array $parameters the bind params values
      * @param string $operator default operator
+     * @param boolean $expand expand array
      * @return boolean|string
      */
-    public static function getCriteriaWhere($field, $criteria, $key, &$parameters, $operator = '=')
+    public static function getCriteriaWhere($field, $criteria, $key, &$parameters, $operator = '=', $expand = true)
     {
         if (!is_array($criteria)) {
             $criteria = [$key => $criteria];
@@ -48,7 +49,7 @@ class SQL
                         $where[] = strtoupper($value);
                     } elseif (in_array(strtoupper($op), ['LIKE', '<', '>', '<>', '<=', '>=', '=', 'IN', 'NOT IN'])) {
                         $subkey = $key.$i;
-                        $where[] = self::getCriteriaWhere($field, [$subkey => $value], $subkey, $parameters, $op);
+                        $where[] = self::getCriteriaWhere($field, [$subkey => $value], $subkey, $parameters, $op, $expand);
                         ++$i;
                     }
                 }
@@ -73,8 +74,20 @@ class SQL
             // if there are values left we add a IN () or NOT IN () condition
             if (!empty($values)) {
                 // we put the values in the params array
-                $parameters[$key] = $values;
-                $where[] = "$field ".(in_array($operator, ['<>', 'NOT IN']) ? 'NOT IN' : 'IN')." (:$key)";
+                if ($expand) {
+                    $i = 0;
+                    $ks = [];
+                    foreach ($values as $v) {
+                        $i++;
+                        $k = $key . '_' . $i;
+                        $ks[] = ':' . $k;
+                        $parameters[$k] = $v;
+                    }
+                    $where[] = "$field ".(in_array($operator, ['<>', 'NOT IN']) ? 'NOT IN' : 'IN')." (".implode(',', $ks).")";
+                } else {
+                    $parameters[$key] = $values;
+                    $where[] = "$field ".(in_array($operator, ['<>', 'NOT IN']) ? 'NOT IN' : 'IN')." (:$key)";
+                }
             }
             // if we have found a NULL value we add IS (NOT) NULL condition
             if ($isNull) {
