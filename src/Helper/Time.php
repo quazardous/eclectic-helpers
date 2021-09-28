@@ -77,7 +77,7 @@ class Time
     
     /**
      * Ensure the date can be a correct \DateTime.
-     * @param \DateTime|string $date
+     * @param \DateTime|string|null $date
      * @param string $format
      * @throws \InvalidArgumentException
      * @return \DateTime
@@ -98,7 +98,7 @@ class Time
     
     /**
      * Ensure the date can be a correct \DateTime or null.
-     * @param \DateTime|string $date
+     * @param \DateTime|string|null $date
      * @param string $format
      * @throws \InvalidArgumentException
      * @return \DateTime|null
@@ -119,7 +119,7 @@ class Time
     
     /**
      * Ensure the date can be a correct date string.
-     * @param \DateTime|string $date
+     * @param \DateTime|string|null $date
      * @param string $format
      * @throws \InvalidArgumentException
      */
@@ -139,7 +139,7 @@ class Time
     
     /**
      * Ensure the date can be a correct date string or null.
-     * @param \DateTime|string $date
+     * @param \DateTime|string|null $date
      * @param string $format
      * @throws \InvalidArgumentException
      * @return string|null
