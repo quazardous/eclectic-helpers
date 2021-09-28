@@ -101,7 +101,7 @@ class Time
      * @param \DateTime|string $date
      * @param string $format
      * @throws \InvalidArgumentException
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public static function ensureDateTimeOrNull($date, $format = "Y-m-d H:i:s")
     {
@@ -142,6 +142,7 @@ class Time
      * @param \DateTime|string $date
      * @param string $format
      * @throws \InvalidArgumentException
+     * @return string|null
      */
     public static function ensureStringOrNull($date, $format = "Y-m-d H:i:s")
     {
