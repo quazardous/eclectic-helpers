@@ -24,7 +24,7 @@ interface RowWrapperInterface
     /**
      * Same but with multiple fields at once.
      * @param callable|mixed $value $names
-     * @param unknown $value
+     * @param mixed $value
      */
     public function addFields(array $names, $value = null);
     

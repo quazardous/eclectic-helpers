@@ -7,8 +7,8 @@ class Time
     /**
      * Add some fuzzyness to the given interval
      * @param \DateInterval $interval
-     * @param real $fuzziness
-     * @param real $mode
+     * @param float $fuzziness
+     * @param float $mode
      *  - mode < 0 : for 0.1 in fuzziness it means -10% +0%
      *  - mode == 0 : for 0.1 in fuzziness it means -5% +5%
      *  - mode > 0 : for 0.1 in fuzziness it means -0% +10%
@@ -37,7 +37,7 @@ class Time
     /**
      * Add some fuzzyness to the given interval
      * @param \DateInterval $interval
-     * @param real $fuzziness
+     * @param float $fuzziness
      * @param number $mode
      * @return \DateInterval
      */

@@ -39,7 +39,7 @@ class ArrayMap
      * Deep set a value in an associative array.
      * @param array $array
      * @param string|array $path
-     * @param scalar $value
+     * @param mixed $value
      * @param string $delim
      */
     public static function deepSet(array &$array, $path, $value, $delim = '/')
@@ -65,7 +65,7 @@ class ArrayMap
      * @param array $array
      * @param string|array $path
      * @param string $delim
-     * @return NULL|scalar
+     * @return NULL|mixed
      */
     public static function deepGet(array $array, $path, $delim = '/')
     {
