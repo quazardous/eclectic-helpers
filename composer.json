@@ -12,7 +12,7 @@
 			"role" : "Developer"
 		}
 	],
-   "autoload" : {
+    "autoload" : {
         "psr-4" : {
             "Quazardous\\Eclectic\\" : "src"
         }
@@ -31,9 +31,7 @@
     "require-dev": {
         "doctrine/common" : "^2.0",
         "symfony/property-access": "^3.0",
-        "doctrine/dbal" : "^2.5"
-    },
-	"require": {
-		"phpunit/phpunit": "^6.2"
-	}
+        "doctrine/dbal" : "^2.5",
+        "phpunit/phpunit": "^6.2"
+    }
 }
